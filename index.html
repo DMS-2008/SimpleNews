@@ -1,225 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Global Times</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #222;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Times 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #fdfdfd;
+      --bg-dark: #0e0e0e;
+      --text-light: #111;
+      --text-dark: #f5f5f5;
+      --accent-1: #ff4e00;
+      --accent-2: rgb(249, 217, 35);
+      --accent-3: #00d4ff;
+      --accent-4: #9b00ff;
+    }
 
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.6s, color 0.6s;
+      line-height: 1.6;
+    }
 
-        header {
-            background-color: #111;
-            color: white;
-            padding: 20px 0;
-        }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+    /* Glassmorphism header */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+    }
 
-        header h1 {
-            font-size: 28px;
-            font-weight: 700;
-        }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
 
-        nav a {
-            color: #f9d923;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 600;
-        }
+    header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent-2);
+      text-shadow: 0 0 10px rgba(249, 217, 35, 0.6);
+    }
 
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            background: linear-gradient(120deg, #f9d923 0%, #ff4e00 100%);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
 
-        .hero:hover {
-            box-shadow: 0 8px 32px rgba(255, 78, 0, 0.18);
-            transform: scale(1.01);
-            cursor: pointer;
-        }
+    nav a {
+      color: var(--text-dark);
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
 
-        .hero img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-        }
+    body.dark nav a {
+      color: var(--text-light);
+    }
 
-        .hero-text {
-            position: absolute;
-            bottom: 20px;
-            left: 40px;
-            color: white;
-        }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(45deg, var(--accent-2), var(--accent-1));
+      transition: width 0.3s ease;
+    }
 
-        .hero-text h2 {
-            font-size: 32px;
-            margin: 0;
-        }
+    nav a:hover::after {
+      width: 100%;
+    }
+    nav a:hover
+    {
+        color:rgb(249, 217, 35) ;
+    }
 
-        .news-section {
-            margin-top: 40px;
-        }
+    /* Dark Mode Toggle */
+    .toggle-btn {
+      border: none;
+      background: linear-gradient(45deg, var(--accent-3), var(--accent-4));
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
 
-        .news-section h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
 
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+    /* Hero with subtle gradient + blurred blobs */
+    .hero {
+      height: 40vh;
+      background: linear-gradient(135deg, #ff4e00 0%, #f9d923 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: white;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .news-grid article {
-            background-color: #f8f8f8;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+    }
 
-        .news-grid article:hover {
-            box-shadow: 0 6px 24px rgba(249, 217, 35, 0.18);
-            transform: translateY(-6px) scale(1.03);
-            cursor: pointer;
-        }
+    .hero::before {
+      width: 400px;
+      height: 400px;
+      background: #ff4e00;
+      top: -100px;
+      left: -100px;
+    }
 
-        .news-grid img {
-            width: 100%;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
+    .hero::after {
+      width: 500px;
+      height: 500px;
+      background: #f9d923;
+      bottom: -150px;
+      right: -150px;
+    }
 
-        footer {
-            margin-top: 40px;
-            background-color: #111;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+    .hero h2,
+    .hero p {
+      position: relative;
+      z-index: 1;
+    }
 
-        footer:hover {
-            box-shadow: 0 4px 16px rgba(255, 78, 0, 0.15);
-            transform: scale(1.01);
-            cursor: pointer;
-        }
+    .hero h2 {
+      font-size: 42px;
+      margin: 0;
+    }
 
-        nav {
+    .hero p {
+      max-width: 600px;
+      margin-top: 10px;
+      font-size: 18px;
+    }
 
-            display: flex;
-         
+    /* News Section */
+    .news-section {
+      margin-top: 60px;
+    }
 
+    .news-section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+      background: linear-gradient(45deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
 
-        nav a {
+    .news-grid article {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.8s ease, transform 0.3s;
+    }
 
-            position: relative;
-            width: max-content;
-               justify-content: flex-end;
-            
+    body.dark .news-grid article {
+      background: rgba(0, 0, 0, 0.4);
+    }
 
+    .news-grid article.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
 
+    .news-grid img {
+      width: 100%;
+      display: block;
+    }
 
-        }
+    .news-grid h3 {
+      margin: 15px;
+      font-size: 20px;
+    }
 
+    .news-grid p {
+      margin: 0 15px 20px;
+      font-size: 15px;
+    }
 
-        nav a::after {
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 3px;
-            bottom: 0px;
-            left: 0px;
-            background: linear-gradient(45deg, yellow, red);
-            transition: width 0.4s ease;
-        }
+    .news-grid article:hover {
+      transform: translateY(-6px) scale(1.05) rotateY(6deg);
+      box-shadow: 0 10px 30px rgba(249, 217, 35, 0.3);
+      cursor: pointer;
+    }
 
-        nav a:hover::after {
-            width: 100%;
-        }
-        nav a {
-            transition: color 0.2s, box-shadow 0.3s;
-        }
-        nav a:hover {
-            color: #ff4e00;
-            box-shadow: 0 2px 10px rgba(255, 78, 0, 0.2);
-        }
-    </style>
-
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      background: rgba(20,20,20,0.9);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 <body>
-    <header>
-        <div class="container">
-            <h1>Global Times</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="politics.html">Politics</a>
-                <a href="technology.html">Technology</a>
-                <a href="sports.html">Sports</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <div class="container">
+      <h1>Todays Voice</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="politics.html">Politics</a>
+        <a href="technology.html">Technology</a>
+        <a href="sports.html">Sports</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button class="toggle-btn" id="toggleTheme">🌙 Dark</button>
+    </div>
+  </header>
 
-    <section class="hero">
-        <img src="images/hero.jpg" alt="Top News" />
-        <div class="hero-text">
-            <h2>Breaking: Major Election Update</h2>
-            <p>Leaders react as the final results roll in. Catch the full coverage live...</p>
-        </div>
-    </section>
+  <section class="hero">
+    <h2>Breaking: Major Election Update</h2>
+    <p>Leaders react as the final results roll in. Stay tuned for live coverage with instant updates, visuals, and expert insights.</p>
+  </section>
 
-    <section class="news-section container">
-        <h2>Latest Headlines</h2>
-        <div class="news-grid">
-            <article>
-                <img src="images/politics.jpg" alt="Politics" />
-                <h3>New Bill Passed in Parliament</h3>
-                <p>The government has successfully passed a new bill focusing on reforms...</p>
-            </article>
-            <article>
-                <img src="images/tech.jpg" alt="Tech" />
-                <h3>AI Revolution in Smartphones</h3>
-                <p>The tech world is buzzing with the launch of a new AI-powered smartphone...</p>
-            </article>
-            <article>
-                <img src="images/sports.jpg" alt="Sports" />
-                <h3>India Clinches Cricket Victory</h3>
-                <p>Team India secures a thrilling win against Australia in a last-over showdown...</p>
-            </article>
-        </div>
-    </section>
+  <section class="news-section container">
+    <h2>Latest Headlines</h2>
+    <div class="news-grid">
+      <article>
+        <img src="images/politics.jpg" alt="Politics" />
+        <h3>New Bill Passed in Parliament</h3>
+        <p>The government has successfully passed a new bill focusing on reforms...</p>
+      </article>
+      <article>
+        <img src="images/tech.jpg" alt="Tech" />
+        <h3>AI Revolution in Smartphones</h3>
+        <p>The tech world is buzzing with the launch of a new AI-powered smartphone...</p>
+      </article>
+      <article>
+        <img src="images/sports.jpg" alt="Sports" />
+        <h3>India Clinches Cricket Victory</h3>
+        <p>Team India secures a thrilling win against Australia in a last-over showdown...</p>
+      </article>
+    </div>
+  </section>
 
-    <footer>
-        <p>&copy; 2025 Global Times. Designed by Your Group.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2025 Todays Voice. Designed by  Batch5.</p>
+  </footer>
+
+  <script>
+    // Dark Mode Toggle
+    const toggleBtn = document.getElementById("toggleTheme");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
+    });
+
+    // Scroll Animations
+    const articles = document.querySelectorAll(".news-grid article");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    articles.forEach(article => observer.observe(article));
+  </script>
 </body>
-
 </html>
