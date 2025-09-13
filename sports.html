@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sports - Todays Voice</title>
     <link rel="stylesheet" href="style.css" />
-       
+
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animate articles
-        document.querySelectorAll('.news-grid article').forEach((a,i)=>{
-            a.style.animationPlayState = 'running';
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate articles
+            document.querySelectorAll('.news-grid article').forEach((a, i) => {
+                a.style.animationPlayState = 'running';
+            });
+            // Highlight active nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === 'sports.html') {
+                    link.classList.add('active');
+                }
+            });
         });
-        // Highlight active nav link
-        document.querySelectorAll('nav a').forEach(link => {
-            if (link.getAttribute('href') === 'sports.html') {
-                link.classList.add('active');
-            }
-        });
-    });
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="sports">
     <header>
         <div class="container">
@@ -56,4 +58,5 @@
         <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
     </footer>
 </body>
+
 </html>
