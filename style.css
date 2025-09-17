@@ -338,3 +338,27 @@ footer {
   padding: 20px;
   font-size: 14px;
 }
+
+.btn {
+  border: solid;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
+  color: black;
+  background-color: white;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(249, 217, 35, 0.6);
+}
+
+.btn a {
+  text-decoration: none;
+  color: #0e0e0e;
+}
