@@ -62,9 +62,9 @@ def politics():
 @app.route("/register.html", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
+        username = request.form["regName"]
+        email = request.form["regEmail"]
+        password = request.form["regPassword"]
 
         hashed_password = generate_password_hash(password)
 
@@ -87,8 +87,8 @@ def register():
 @app.route("/login.html", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form["loginEmail"]
+        password = request.form["loginPassword"]
 
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
