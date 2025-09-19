@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Todays Voice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate articles
+            document.querySelectorAll('.news-grid article').forEach((a, i) => {
+                a.style.animationPlayState = 'running';
+            });
+            // Highlight active nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === 'about.html') {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="about">
+    <header>
+        <div class="container">
+            <h1>Todays Voice</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="politics.html">Politics</a>
+                <a href="technology.html">Technology</a>
+                <a href="sports.html">Sports</a>
+                <a href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <img src="images/hero.jpg" alt="About" />
+        <div class="hero-text">
+            <h2>About Todays Voice</h2>
+            <p>Learn more about our mission, vision, and team.</p>
+        </div>
+    </section>
+    <section class="news-section container">
+        <h2>Who We Are</h2>
+        <div class="news-grid">
+            <article>
+                <img src="images/hero.jpg" alt="About" />
+                <h3>Our Story</h3>
+                <p>Todays Voice is dedicated to delivering the latest news...</p>
+            </article>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
+    </footer>
+</body>
+
+</html>

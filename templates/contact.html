@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Todays Voice</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate articles
+            document.querySelectorAll('.news-grid article').forEach((a, i) => {
+                a.style.animationPlayState = 'running';
+            });
+            // Highlight active nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === 'contact.html') {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="contact">
+    <header>
+        <div class="container">
+            <h1>Todays Voice</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="politics.html">Politics</a>
+                <a href="technology.html">Technology</a>
+                <a href="sports.html">Sports</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <img src="images/hero.jpg" alt="Contact" />
+        <div class="hero-text">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Reach out with your questions or feedback.</p>
+        </div>
+    </section>
+    <section class="news-section container">
+        <h2>Get in Touch</h2>
+        <div class="news-grid">
+            <article>
+                <img src="images/hero.jpg" alt="Contact" />
+                <h3>Email Us</h3>
+                <p>mangapathi@gmail.com</p>
+            </article>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
+    </footer>
+</body>
+
+</html>
