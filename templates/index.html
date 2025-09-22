@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Global Times 2025</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -22,7 +22,7 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </nav>
-      <button class="btn"><a href="login.html">Signin</a></button>
+      <button class="btn"><a href="login.html">SignIn</a></button>
     </div>
   </header>
 
@@ -36,17 +36,17 @@
     <h2>Latest Headlines</h2>
     <div class="news-grid">
       <article>
-        <img src="images/politics.jpg" alt="Politics" />
+        <img src="{{ url_for('static', filename='images/politics.jpg') }}" alt="Politics">
         <h3>New Bill Passed in Parliament</h3>
         <p>The government has successfully passed a new bill focusing on reforms...</p>
       </article>
       <article>
-        <img src="images/tech.jpg" alt="Tech" />
+        <img src="{{ url_for('static', filename='images/tech.jpg') }}" alt="Technology">
         <h3>AI Revolution in Smartphones</h3>
         <p>The tech world is buzzing with the launch of a new AI-powered smartphone...</p>
       </article>
       <article>
-        <img src="images/sports.jpg" alt="Sports" />
+        <img src="{{ url_for('static', filename='images/sports.jpg') }}" alt="sports">
         <h3>India Clinches Cricket Victory</h3>
         <p>Team India secures a thrilling win against Australia in a last-over showdown...</p>
       </article>
