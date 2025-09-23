@@ -3,26 +3,20 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
-template_path = os.path.join(os.getcwd(), "templates")
-print("Using template folder:", template_path)
-print("Templates contents:", os.listdir(template_path))
-
-app = Flask(__name__, template_folder=template_path)
-
-app.secret_key = "your_secret_key"  # for sessions
+# Flask setup
+app = Flask(__name__)
+app.secret_key = "your_secret_key"  # Change this to a secure random key in production
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
 # Database setup
 def init_db():
     conn = sqlite3.connect(DB_PATH)
-
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            email TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL
         )
     """)
@@ -62,7 +56,6 @@ def politics():
 @app.route("/register.html", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form["regName"]
         email = request.form["regEmail"]
         password = request.form["regPassword"]
 
@@ -71,14 +64,14 @@ def register():
         try:
             conn = sqlite3.connect(DB_PATH)
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-                           (username, email, hashed_password))
+            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)",
+                           (email, hashed_password))
             conn.commit()
             conn.close()
             flash("Registration successful! Please login.", "success")
             return redirect(url_for("login"))
-        except:
-            flash("Username already exists!", "danger")
+        except sqlite3.IntegrityError:
+            flash("Email already registered!", "danger")
             return redirect(url_for("register"))
 
     return render_template("register.html")
@@ -87,21 +80,21 @@ def register():
 @app.route("/login.html", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["loginEmail"]
+        email = request.form["loginEmail"]
         password = request.form["loginPassword"]
 
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+        cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
         user = cursor.fetchone()
         conn.close()
 
-        if user and check_password_hash(user[3], password):
-            session["user"] = username
+        if user and check_password_hash(user[2], password):  # user[2] = password
+            session["user"] = email
             flash("Login successful!", "success")
             return redirect(url_for("home"))
         else:
-            flash("Invalid username or password!", "danger")
+            flash("Invalid email or password!", "danger")
 
     return render_template("login.html")
 
