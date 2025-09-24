@@ -26,11 +26,15 @@
     </div>
   </header>
 
-  <section class="hero">
-    <h2>Breaking: Major Election Update</h2>
-    <p>Leaders react as the final results roll in. Stay tuned for live coverage with instant updates, visuals, and
-      expert insights.</p>
-  </section>
+
+  <div class="hero-text ">
+    <span class="breaking-label">BREAKING</span>
+    <h2 class="hero-breaking">Major Election Update: Results Rolling In</h2>
+    <p class="hero-description">Leaders react as votes are counted. Stay tuned for live coverage and instant analysis.
+    </p>
+  </div>
+
+
 
   <section class="news-section container">
     <h2>Latest Headlines</h2>
@@ -52,26 +56,35 @@
       </article>
     </div>
   </section>
+  <div class="weather-section container">
+    <h2>Check Weather</h2>
+    <form class="weather-form" method="POST">
+      <input type="text" name="city" placeholder="Enter city name" required>
+      <button type="submit">Search</button>
+    </form>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
-  </footer>
+</body>
 
-  <script>
+<footer>
+  <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
+</footer>
 
-    // Scroll Animations
-    const articles = document.querySelectorAll(".news-grid article");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+<script>
 
-    articles.forEach(article => observer.observe(article));
-  </script>
+  // Scroll Animations
+  const articles = document.querySelectorAll(".news-grid article");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  articles.forEach(article => observer.observe(article));
+</script>
 </body>
 
 </html>

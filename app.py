@@ -2,14 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import requests
 
-# Flask setup
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Change this to a secure random key in production
+app.secret_key = "your_secret_key"  # Change this for production
 
+# Database path
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
-# Database setup
+# Weather API config
+API_KEY = "f0addff8ded1c7d4f5cc71579de53b4b"
+BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+
+# ----------------- Database Setup ----------------- #
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -25,13 +30,33 @@ def init_db():
 
 init_db()
 
-# Home route
-@app.route("/")
-@app.route("/index.html")
+# ----------------- Routes ----------------- #
+
+# Home page with weather form
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index.html", methods=["GET", "POST"])
 def home():
+    if request.method == "POST":
+        city = request.form.get("city")
+        url = f"{BASE_URL}q={city}&appid={API_KEY}&units=metric"
+        response = requests.get(url)
+        data = response.json()
+
+        if data.get("cod") == 200:
+            weather = {
+                "city": city,
+                "temperature": data["main"]["temp"],
+                "description": data["weather"][0]["description"],
+                "humidity": data["main"]["humidity"],
+                "wind": data["wind"]["speed"]
+            }
+            return render_template("result.html", weather=weather)
+        else:
+            return render_template("result.html", weather=None, error="City not found!")
+
     return render_template("index.html")
 
-# Static routes for pages
+# Static pages
 @app.route("/about.html")
 def about():
     return render_template("about.html")
@@ -52,13 +77,14 @@ def technology():
 def politics():
     return render_template("politics.html")
 
+# ----------------- Authentication ----------------- #
+
 # Register
 @app.route("/register.html", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         email = request.form["regEmail"]
         password = request.form["regPassword"]
-
         hashed_password = generate_password_hash(password)
 
         try:
@@ -89,7 +115,7 @@ def login():
         user = cursor.fetchone()
         conn.close()
 
-        if user and check_password_hash(user[2], password):  # user[2] = password
+        if user and check_password_hash(user[2], password):
             session["user"] = email
             flash("Login successful!", "success")
             return redirect(url_for("home"))
@@ -105,5 +131,6 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("home"))
 
+# ----------------- Run App ----------------- #
 if __name__ == "__main__":
     app.run(debug=True)

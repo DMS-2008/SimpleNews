@@ -105,7 +105,7 @@ nav a {
 
 nav a:hover {
   color: var(--accent-1);
-  box-shadow: 0 4px 15px skyblue;
+  box-shadow: 0 4px 10px blue;
   transform: translateY(-2px);
 }
 
@@ -167,7 +167,7 @@ nav a.active {
   font-size: 28px;
   margin-bottom: 20px;
   text-align: center;
-  background: linear-gradient(45deg, var(--accent-1), var(--accent-2));
+  background: var(--accent-1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -253,4 +253,86 @@ footer {
 .btn a {
   text-decoration: none;
   color: white;
+}
+
+/* Breaking News Hero */
+
+.hero-text {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center horizontally */
+  justify-content: center;
+  /* Center vertically if needed */
+  max-width: 800px;
+  /* Restrict width */
+  margin: 40px auto;
+  /* Auto left/right margin centers it */
+  padding: 20px 15px;
+  border-radius: 10px;
+  animation: heroFadeIn 1s ease forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  /* subtle shadow if needed */
+  background: #fff;
+  /* optional to match your page theme */
+}
+
+.breaking-label {
+  font-weight: 500;
+}
+
+.hero-breaking {
+  font-size: 28px;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 10px;
+  text-align: center;
+  /* Ensure text is centered */
+}
+
+.hero-description {
+  font-size: 16px;
+  color: var(--text-light);
+  opacity: 0.9;
+  text-align: center;
+  /* Ensure text is centered */
+}
+
+
+/* Subtle Animations */
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes titleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
 }
