@@ -1,6 +1,4 @@
-/* ===== Clean White UI with Dynamic Animations ===== */
-
-/* Root Variables */
+/* ---------------- Root Variables ---------------- */
 :root {
   --bg-light: #ffffff;
   --bg-dark: #0e0e0e;
@@ -12,7 +10,8 @@
   --accent-4: #17a2b8;
 }
 
-/* Base Styles */
+
+/* ---------------- Base Styles ---------------- */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -27,7 +26,7 @@ body.dark {
   color: var(--text-dark);
 }
 
-/* Page-specific Body Colors */
+/* ---------------- Page-specific Body Backgrounds ---------------- */
 body.home {
   background: var(--bg-light);
 }
@@ -52,7 +51,7 @@ body.about {
   background: #f8f8f8;
 }
 
-/* Header / Nav */
+/* ---------------- Header / Navbar ---------------- */
 header {
   position: sticky;
   top: 0;
@@ -114,7 +113,7 @@ nav a.active {
   color: #fff;
 }
 
-/* Hero Section */
+/* ---------------- Hero Section ---------------- */
 .hero {
   position: relative;
   width: 100%;
@@ -123,7 +122,7 @@ nav a.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: heroFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: heroFadeInBlur 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-text {
@@ -134,7 +133,8 @@ nav a.active {
   animation: textSlideUp 1.1s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-@keyframes heroFadeIn {
+/* Hero Animations */
+@keyframes heroFadeInBlur {
   from {
     opacity: 0;
     filter: blur(8px);
@@ -158,7 +158,7 @@ nav a.active {
   }
 }
 
-/* News Section */
+/* ---------------- News Section ---------------- */
 .news-section {
   margin-top: 60px;
 }
@@ -221,9 +221,9 @@ nav a.active {
   color: #555;
 }
 
-/* Footer */
+/* ---------------- Footer ---------------- */
 footer {
-  margin-top: 300px;
+  margin-top: auto;
   background: #fff;
   color: #777;
   text-align: center;
@@ -232,8 +232,8 @@ footer {
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
 }
 
-/* Buttons */
-.btn {
+/* ---------------- Buttons ---------------- */
+.signin-button {
   border-radius: 5px;
   padding: 8px 16px;
   background-color: black;
@@ -242,40 +242,28 @@ footer {
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
   transition: all 0.3s ease;
-
-}
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 3px 15px rgba(0, 255, 255, 0.9);
-}
-
-.btn a {
   text-decoration: none;
-  color: white;
 }
 
-/* Breaking News Hero */
+.signin-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 15px #007BFF;
+}
 
+
+/* ---------------- Breaking News Hero ---------------- */
 .hero-text {
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Center horizontally */
   justify-content: center;
-  /* Center vertically if needed */
   max-width: 800px;
-  /* Restrict width */
   margin: 40px auto;
-  /* Auto left/right margin centers it */
   padding: 20px 15px;
   border-radius: 10px;
-  animation: heroFadeIn 1s ease forwards;
+  animation: heroFadeInSlide 1s ease forwards;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  /* subtle shadow if needed */
   background: #fff;
-  /* optional to match your page theme */
 }
 
 .breaking-label {
@@ -288,7 +276,6 @@ footer {
   color: black;
   margin-bottom: 10px;
   text-align: center;
-  /* Ensure text is centered */
 }
 
 .hero-description {
@@ -296,12 +283,10 @@ footer {
   color: var(--text-light);
   opacity: 0.9;
   text-align: center;
-  /* Ensure text is centered */
 }
 
-
-/* Subtle Animations */
-@keyframes heroFadeIn {
+/* Breaking News Animations */
+@keyframes heroFadeInSlide {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -336,8 +321,289 @@ footer {
     transform: translateY(0);
   }
 }
-.wheather
-{
+
+/* ---------------- Weather Widget ---------------- */
+.wheather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 25px 20px;
+  border-radius: 15px;
+  background: #ffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+  animation: heroFadeInSlide 1s ease forwards;
+  text-align: center;
+
+}
+
+.wheather:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-style: solid;
+  border-color: #007BFF;
+
+}
+
+/* Optional: Smooth text styling */
+.wheather h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: blueviolet;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Animation tweak for slide-in + fade-in */
+@keyframes heroFadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ---------------- Login Page ---------------- */
+.login-body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0077b6, #0096c7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.login-header {
+  margin-bottom: 1rem;
+  color: #0077b6;
+}
+
+.login-input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.login-input:focus {
+  border-color: #0096c7;
+  box-shadow: 0 0 5px #0096c7;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background: #023e8a;
+}
+
+/* ---------------- Register Page ---------------- */
+.register-body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff7b00, #ff9500);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.register-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+  animation: slideIn 1s ease-in-out;
+}
+
+.register-header {
+  margin-bottom: 1rem;
+  color: #ff7b00;
+}
+
+.register-input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.register-input:focus {
+  border-color: #ff9500;
+  box-shadow: 0 0 5px #ff9500;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background: #ff7b00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.register-button:hover {
+  background: #cc5c00;
+}
+
+/* ---------------- Shared Switch & Flash Messages ---------------- */
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}
+
+.flash {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.flash.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.flash.danger {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ---------------- Animations for Forms ---------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ---------------- Weather Result Card ---------------- */
+.weather-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  width: 90%;
+  margin-left: 500px;
   margin-top: 200px;
-  margin-left: 550px;
+  padding: 30px 25px;
+  border-radius: 15px;
+  background: #00c6ff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+}
+
+/* Hover effect */
+.weather-result:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+
+}
+
+/* Headings */
+.weather-result h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffff;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Paragraphs */
+.weather-result p {
+  font-size: 16px;
+  color: black;
+  margin: 8px 0;
+  opacity: 0.95;
+  transition: color 0.3s ease;
+}
+
+/* Link button */
+.weather-result a {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.weather-result a:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }

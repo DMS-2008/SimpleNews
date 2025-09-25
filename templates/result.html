@@ -3,20 +3,26 @@
 
 <head>
     <title>Weather Result</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
+   <body>
+    <div class="weather-result">
     {% if weather %}
-    <h2>Weather in {{ weather.city }}</h2>
-    <p>🌡 Temperature: {{ weather.temperature }} °C</p>
-    <p>☁️ Condition: {{ weather.description }}</p>
-    <p>💧 Humidity: {{ weather.humidity }} %</p>
-    <p>💨 Wind Speed: {{ weather.wind }} m/s</p>
+        <h2>Weather in {{ weather.city }}</h2>
+        <p>🌡 Temperature: {{ weather.temperature }} °C</p>
+        <p>☁️ Condition: {{ weather.description }}</p>
+        <p>💧 Humidity: {{ weather.humidity }} %</p>
+        <p>💨 Wind Speed: {{ weather.wind }} m/s</p>
     {% else %}
-    <h2>{{ error }}</h2>
+        <h2>{{ error }}</h2>
     {% endif %}
 
     <a href="/">Search another city</a>
+    </div>
+</body>
+
 </body>
 
 </html>

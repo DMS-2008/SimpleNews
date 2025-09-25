@@ -5,6 +5,7 @@ import os
 import requests
 
 app = Flask(__name__)
+
 app.secret_key = "your_secret_key"  # Change this for production
 
 # Database path
@@ -30,12 +31,36 @@ def init_db():
 
 init_db()
 
+# ----------------- Breaking News ----------------- #
+breaking_news_list = [
+    {
+        "title": "Major Election Update: Results Rolling In",
+        "description": "Leaders react as votes are counted. Stay tuned for live coverage and instant analysis."
+    },
+    {
+        "title": "Stock Markets Surge Amid Global Optimism",
+        "description": "Investors celebrate strong earnings reports. Markets on the rise."
+    },
+    {
+        "title": "Weather Alert: Heavy Rain Expected in City Center",
+        "description": "Authorities advise caution and monitor flooding risks."
+    },
+    {
+        "title": "Tech Giant Launches New AI Tool",
+        "description": "The latest AI innovation promises to change the way we work."
+    }
+]
+
 # ----------------- Routes ----------------- #
 
-# Home page with weather form
+# Home page with weather form and breaking news
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index.html", methods=["GET", "POST"])
 def home():
+    # Show the first breaking news item by default
+    news_title = breaking_news_list[2]["title"]
+    news_description = breaking_news_list[2]["description"]
+
     if request.method == "POST":
         city = request.form.get("city")
         url = f"{BASE_URL}q={city}&appid={API_KEY}&units=metric"
@@ -50,11 +75,26 @@ def home():
                 "humidity": data["main"]["humidity"],
                 "wind": data["wind"]["speed"]
             }
-            return render_template("result.html", weather=weather)
+            return render_template(
+                "result.html",
+                weather=weather,
+                news_title=news_title,
+                news_description=news_description
+            )
         else:
-            return render_template("result.html", weather=None, error="City not found!")
+            return render_template(
+                "result.html",
+                weather=None,
+                error="City not found!",
+                news_title=news_title,
+                news_description=news_description
+            )
 
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        news_title=news_title,
+        news_description=news_description
+    )
 
 # Static pages
 @app.route("/about.html")
@@ -90,8 +130,10 @@ def register():
         try:
             conn = sqlite3.connect(DB_PATH)
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)",
-                           (email, hashed_password))
+            cursor.execute(
+                "INSERT INTO users (email, password) VALUES (?, ?)",
+                (email, hashed_password)
+            )
             conn.commit()
             conn.close()
             flash("Registration successful! Please login.", "success")
