@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -8,12 +8,17 @@ app = Flask(__name__)
 
 app.secret_key = "your_secret_key"  # Change this for production
 
-# Database path
+# ----------------- Database Path ----------------- #
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
-# Weather API config
-API_KEY = "f0addff8ded1c7d4f5cc71579de53b4b"
+# ----------------- Weather API Config ----------------- #
+WEATHER_API_KEY = "e0db134f08f2e772abab69420dbdd973"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+
+# ----------------- News API Config ----------------- #
+NEWS_API_KEY = "pub_03753ccaca664bf7827e552d2102d4d9"  # 🔑 Replace with your NewsAPI.org key
+# Fetch latest news in English and Telugu only
+NEWS_URL = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&language=en,te&q=latest%20news"
 
 # ----------------- Database Setup ----------------- #
 def init_db():
@@ -31,39 +36,15 @@ def init_db():
 
 init_db()
 
-# ----------------- Breaking News ----------------- #
-breaking_news_list = [
-    {
-        "title": "Major Election Update: Results Rolling In",
-        "description": "Leaders react as votes are counted. Stay tuned for live coverage and instant analysis."
-    },
-    {
-        "title": "Stock Markets Surge Amid Global Optimism",
-        "description": "Investors celebrate strong earnings reports. Markets on the rise."
-    },
-    {
-        "title": "Weather Alert: Heavy Rain Expected in City Center",
-        "description": "Authorities advise caution and monitor flooding risks."
-    },
-    {
-        "title": "Tech Giant Launches New AI Tool",
-        "description": "The latest AI innovation promises to change the way we work."
-    }
-]
-
 # ----------------- Routes ----------------- #
 
-# Home page with weather form and breaking news
+# Home page (news loads dynamically with JS)
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index.html", methods=["GET", "POST"])
 def home():
-    # Show the first breaking news item by default
-    news_title = breaking_news_list[2]["title"]
-    news_description = breaking_news_list[2]["description"]
-
     if request.method == "POST":
         city = request.form.get("city")
-        url = f"{BASE_URL}q={city}&appid={API_KEY}&units=metric"
+        url = f"{BASE_URL}q={city}&appid={WEATHER_API_KEY}&units=metric"
         response = requests.get(url)
         data = response.json()
 
@@ -75,28 +56,28 @@ def home():
                 "humidity": data["main"]["humidity"],
                 "wind": data["wind"]["speed"]
             }
-            return render_template(
-                "result.html",
-                weather=weather,
-                news_title=news_title,
-                news_description=news_description
-            )
+            return render_template("result.html", weather=weather)
         else:
-            return render_template(
-                "result.html",
-                weather=None,
-                error="City not found!",
-                news_title=news_title,
-                news_description=news_description
-            )
+            return render_template("result.html", weather=None, error="City not found!")
 
-    return render_template(
-        "index.html",
-        news_title=news_title,
-        news_description=news_description
-    )
+    return render_template("index.html")
 
-# Static pages
+# Endpoint to fetch latest breaking news (AJAX call)
+@app.route("/get_news")
+def get_news():
+    try:
+        response = requests.get(NEWS_URL)
+        news_data = response.json()
+        news_list = [article['title'] for article in news_data.get('results', []) if 'title' in article]
+        if not news_list:
+            news_list = ["No news found or API limit reached."]
+        return jsonify({"news": news_list})
+    except Exception as e:
+        return jsonify({"news": ["Error fetching news", str(e)]})
+           
+
+
+# ----------------- Static Pages ----------------- #
 @app.route("/about.html")
 def about():
     return render_template("about.html")
@@ -118,8 +99,6 @@ def politics():
     return render_template("politics.html")
 
 # ----------------- Authentication ----------------- #
-
-# Register
 @app.route("/register.html", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -144,7 +123,6 @@ def register():
 
     return render_template("register.html")
 
-# Login
 @app.route("/login.html", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -166,7 +144,6 @@ def login():
 
     return render_template("login.html")
 
-# Logout
 @app.route("/logout")
 def logout():
     session.pop("user", None)

@@ -135,7 +135,7 @@ nav a.active {
   justify-content: flex-end;
   flex-wrap: nowrap;
   top: 35px;
-  right: 35px;
+  right:15px;
 }
 /* ---------------- Breaking News Hero ---------------- */
 .hero-text {
@@ -616,4 +616,70 @@ footer {
 .weather-result a:hover {
   background-color: #0056b3;
   transform: scale(1.05);
+}
+
+/* ---------------- Breaking News Ticker ---------------- */
+.news-bar {
+  background-color: #ff4e00;
+  color: white;
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+
+  /* Center the ticker block */
+  width: 80%;           /* or any width you want */
+  margin: 20px auto;    /* centers horizontally */
+  border-radius: 8px;   /* optional: rounded edges */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* optional: subtle shadow */
+}
+
+
+.marquee-content {
+  display: inline-block;
+  padding-left: 100%; /* start off-screen */
+  animation: marquee 60s linear infinite; /* adjust duration to slow/fast */
+}
+
+.news-item {
+  display: inline-block;
+  margin-right: 50px; /* spacing between headlines */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Hero Section Dynamic News */
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* centers content horizontally */
+  justify-content: center;  /* centers content vertically if needed */
+  max-width: 800px;         /* limit width */
+  margin: 40px auto;        /* top/bottom spacing + horizontal center */
+  padding: 20px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  animation: heroFadeInSlide 1s ease forwards;
+  text-align: center;       /* centers text inside the block */
+}
+
+
+.hero-breaking {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.hero-description {
+  font-size: 1rem;
+  color: #333;
+  max-width: 700px;
+  margin:auto;
 }
