@@ -3,6 +3,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import requests
+import time
 
 app = Flask(__name__)
 
@@ -12,13 +13,14 @@ app.secret_key = "your_secret_key"  # Change this for production
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
 # ----------------- Weather API Config ----------------- #
-WEATHER_API_KEY = "e0db134f08f2e772abab69420dbdd973"
+WEATHER_API_KEY = "f0addff8ded1c7d4f5cc71579de53b4b"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
 
 # ----------------- News API Config ----------------- #
-NEWS_API_KEY = "pub_03753ccaca664bf7827e552d2102d4d9"  # 🔑 Replace with your NewsAPI.org key
-# Fetch latest news in English and Telugu only
-NEWS_URL = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&language=en,te&q=latest%20news"
+# Mani key pub_2699a35e03554ae79ac614e85f8400d8
+# mohan key pub_915ed70053cb4adfb5ceb7ed12ffa0ce
+NEWS_API_KEY = "pub_2699a35e03554ae79ac614e85f8400d8" 
+NEWS_URL = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&q=latest%20news"
 
 # ----------------- Database Setup ----------------- #
 def init_db():
@@ -36,9 +38,15 @@ def init_db():
 
 init_db()
 
+# ----------------- Cache Setup ----------------- #
+news_cache = {
+    "data": [],
+    "timestamp": 0
+}
+CACHE_DURATION = 15 * 60  # 15 minutes in seconds
+
 # ----------------- Routes ----------------- #
 
-# Home page (news loads dynamically with JS)
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index.html", methods=["GET", "POST"])
 def home():
@@ -62,19 +70,40 @@ def home():
 
     return render_template("index.html")
 
-# Endpoint to fetch latest breaking news (AJAX call)
+
+# ✅ Endpoint to fetch latest breaking news with caching
 @app.route("/get_news")
 def get_news():
+    global news_cache
+
+    category = request.args.get("category", "latest")  # default to latest news
+    current_time = time.time()
+    
+    # Check cache
+    if news_cache.get(category) and (current_time - news_cache[category]["timestamp"] < CACHE_DURATION):
+        return jsonify({"news": news_cache[category]["data"]})
+
     try:
-        response = requests.get(NEWS_URL)
+        url = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&q={category}"
+        response = requests.get(url)
         news_data = response.json()
-        news_list = [article['title'] for article in news_data.get('results', []) if 'title' in article]
-        if not news_list:
-            news_list = ["No news found or API limit reached."]
+        articles = news_data.get("results", []) or news_data.get("articles", [])
+        news_list = [{
+            "title": article.get("title", "No Title"),
+            "description": article.get("description", ""),
+            "image": article.get("image_url", "")
+        } for article in articles]
+
+        # Cache per category
+        news_cache[category] = {
+            "data": news_list,
+            "timestamp": current_time
+        }
+
         return jsonify({"news": news_list})
     except Exception as e:
-        return jsonify({"news": ["Error fetching news", str(e)]})
-           
+        return jsonify({"news": [{"title": "Error fetching news", "description": str(e)}]})
+
 
 
 # ----------------- Static Pages ----------------- #
@@ -97,6 +126,7 @@ def technology():
 @app.route("/politics.html")
 def politics():
     return render_template("politics.html")
+
 
 # ----------------- Authentication ----------------- #
 @app.route("/register.html", methods=["GET", "POST"])

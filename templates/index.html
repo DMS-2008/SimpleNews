@@ -33,11 +33,22 @@
   </div>
 
   <!-- Hero Section: Show first headline dynamically -->
+<div class="top-cards">  <!-- NEW WRAPPER -->
   <div class="hero-text">
     <span class="breaking-label">BREAKING</span>
     <h2 class="hero-breaking" id="hero-breaking">Loading latest news...</h2>
     <p class="hero-description" id="hero-description"></p>
   </div>
+
+  <div class="wheather">
+    <h2>Check Weather</h2>
+    <form class="weather-form" method="POST">
+      <input type="text" name="city" placeholder="Enter city name" required>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
 
   <section class="news-section container">
     <h2>Latest Headlines</h2>
@@ -60,13 +71,7 @@
     </div>
   </section>
 
-  <div class="wheather">
-    <h2>Check Weather</h2>
-    <form class="weather-form" method="POST">
-      <input type="text" name="city" placeholder="Enter city name" required>
-      <button type="submit">Search</button>
-    </form>
-  </div>
+
 
   <footer>
     <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
@@ -74,33 +79,35 @@
 
   <script>
     // Fetch and display dynamic breaking news
-    async function fetchNews() {
-      try {
-        const response = await fetch('/get_news');
-        const data = await response.json();
-        const newsList = data.news;
-        const newsBar = document.getElementById('news-bar');
-        const heroBreaking = document.getElementById('hero-breaking');
-        const heroDescription = document.getElementById('hero-description');
+  async function fetchNews() {
+  try {
+    const response = await fetch('/get_news');
+    const data = await response.json();
+    const newsList = data.news; // array of objects
+    const newsBar = document.getElementById('news-bar');
+    const heroBreaking = document.getElementById('hero-breaking');
+    const heroDescription = document.getElementById('hero-description');
 
-        // Clear previous news
-        newsBar.innerHTML = '';
-        newsList.forEach((news, index) => {
-          const span = document.createElement('span');
-          span.className = 'news-item';
-          span.textContent = news;
-          newsBar.appendChild(span);
+    // Clear previous news
+    newsBar.innerHTML = '';
 
-          // Show first headline in hero
-          if (index === 0) {
-            heroBreaking.textContent = news;
-            heroDescription.textContent = "";
-          }
-        });
-      } catch (error) {
-        console.error('Error fetching news:', error);
+    newsList.forEach((news, index) => {
+      // Show first headline in hero
+      if (index === 0) {
+        heroBreaking.textContent = news.title || 'No Title';
+        heroDescription.textContent = news.description || '';
       }
-    }
+
+      const span = document.createElement('span');
+      span.className = 'news-item';
+      span.textContent = news.title || 'No Title'; // use title
+      newsBar.appendChild(span);
+    });
+  } catch (error) {
+    console.error('Error fetching news:', error);
+  }
+}
+
 
     // Initial fetch
     fetchNews();

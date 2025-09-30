@@ -6,22 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sports - Todays Voice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Animate articles
-            document.querySelectorAll('.news-grid article').forEach((a, i) => {
-                a.style.animationPlayState = 'running';
-            });
             // Highlight active nav link
             document.querySelectorAll('nav a').forEach(link => {
                 if (link.getAttribute('href') === 'sports.html') {
                     link.classList.add('active');
                 }
             });
+
+            // Animate articles
+            document.querySelectorAll('.news-grid article').forEach(a => {
+                a.style.animationPlayState = 'running';
+            });
+
+            // Fetch and display sports news
+            async function fetchSportsNews() {
+                try {
+                    const response = await fetch('/get_news?category=sports');
+                    const data = await response.json();
+                    const newsGrid = document.querySelector('.news-grid');
+                    newsGrid.innerHTML = '';
+
+                    data.news.forEach(news => {
+                        const article = document.createElement('article');
+
+                        const img = document.createElement('img');
+                        img.src = news.image || '{{ url_for("static", filename="images/sports.jpg") }}';
+                        img.alt = 'Sports';
+                        article.appendChild(img);
+
+                        const h3 = document.createElement('h3');
+                        h3.textContent = news.title || 'No Title';
+                        article.appendChild(h3);
+
+                        const p = document.createElement('p');
+                        p.textContent = news.description || '';
+                        article.appendChild(p);
+
+                        newsGrid.appendChild(article);
+                    });
+                } catch (error) {
+                    console.error('Error fetching sports news:', error);
+                }
+            }
+
+            fetchSportsNews();
         });
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="sports">
@@ -34,26 +68,21 @@
                 <a href="technology.html">Technology</a>
                 <a href="sports.html">Sports</a>
                 <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+
             </nav>
         </div>
     </header>
-    <section class="hero">
-        <img src="images/sports.jpg" alt="Sports" />
-        <div class="hero-text">
-            <h2>Sports Highlights</h2>
-            <p>Catch up on the latest sports news and events.</p>
-        </div>
-    </section>
+
+
+    <!-- News Section -->
     <section class="news-section container">
-        <h2>Sports Headlines</h2>
+        <h2>Sports </h2>
         <div class="news-grid">
-            <article>
-                <img src="images/sports.jpg" alt="Sports" />
-                <h3>Cricket Victory</h3>
-                <p>India clinches a historic win...</p>
-            </article>
+            <!-- Articles will be dynamically injected here -->
         </div>
     </section>
+
     <footer>
         <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
     </footer>
