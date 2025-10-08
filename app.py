@@ -19,7 +19,7 @@ BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
 # ----------------- News API Config ----------------- #
 # Mani key pub_2699a35e03554ae79ac614e85f8400d8
 # mohan key pub_915ed70053cb4adfb5ceb7ed12ffa0ce
-NEWS_API_KEY = "pub_2699a35e03554ae79ac614e85f8400d8" 
+NEWS_API_KEY = "pub_915ed70053cb4adfb5ceb7ed12ffa0ce" 
 NEWS_URL = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&q=latest%20news"
 
 # ----------------- Database Setup ----------------- #
