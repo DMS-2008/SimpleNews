@@ -2,29 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Todays Voice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Animate articles
-            document.querySelectorAll('.news-grid article').forEach((a, i) => {
-                a.style.animationPlayState = 'running';
-            });
-            // Highlight active nav link
-            document.querySelectorAll('nav a').forEach(link => {
-                if (link.getAttribute('href') === 'contact.html') {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="contact">
+<body>
+    <!-- HEADER -->
     <header>
         <div class="container">
             <h1>Todays Voice</h1>
@@ -34,28 +20,40 @@
                 <a href="technology.html">Technology</a>
                 <a href="sports.html">Sports</a>
                 <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="active">Contact</a>
             </nav>
         </div>
     </header>
-    <section class="hero">
-        <img src="images/hero.jpg" alt="Contact" />
-        <div class="hero-text">
-            <h2>Contact Us</h2>
-            <p>We'd love to hear from you! Reach out with your questions or feedback.</p>
+
+    <!-- HERO SECTION -->
+    <section class="contact-hero">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Reach out with your questions or feedback.</p>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact-form-section">
+        <form class="contact-form" method="post" action="/send-message">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- SOCIAL MEDIA LINKS -->
+    <section class="contact-socials">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
     </section>
-    <section class="news-section container">
-        <h2>Get in Touch</h2>
-        <div class="news-grid">
-            <article>
-                <img src="images/hero.jpg" alt="Contact" />
-                <h3>Email Us</h3>
-                <p>mangapathi@gmail.com</p>
-            </article>
-        </div>
-    </section>
-    <footer>
+
+    <!-- FOOTER -->
+    <footer >
         <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
     </footer>
 </body>

@@ -1,4 +1,6 @@
-/* ---------------- Root Variables ---------------- */
+/* ========================================
+   VARIABLES
+   ======================================== */
 :root {
   --bg-light: #ffffff;
   --bg-dark: #0e0e0e;
@@ -9,27 +11,27 @@
   --accent-3: #6c757d;
   --accent-4: #17a2b8;
 }
-*
-{
-  box-sizing: border-box
+
+/* ========================================
+   GLOBAL RESET & TYPOGRAPHY
+   ======================================== */
+* {
+  box-sizing: border-box;
 }
-html
-{
+
+html {
   scroll-behavior: smooth;
 }
 
-
-/* ---------------- Base Styles ---------------- */
 body {
   margin: 0;
-  font-family:'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background: var(--bg-light);
   color: var(--text-light);
   transition: background 0.6s, color 0.6s;
   line-height: 1.6;
 }
 
-/* ---------------- Page-specific Body Backgrounds ---------------- */
 body.home {
   background: var(--bg-light);
 }
@@ -54,7 +56,9 @@ body.about {
   background: #f8f8f8;
 }
 
-/* ---------------- Header / Navbar ---------------- */
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
 header {
   position: sticky;
   top: 0;
@@ -91,10 +95,8 @@ nav {
   border-radius: 30px;
   box-shadow: 0 2px 12px powderblue;
   padding: 10px 24px;
-  margin: 18px 0 0 0;
+  margin-top: 18px;
   flex-wrap: wrap;
-  
-
 }
 
 nav a {
@@ -142,9 +144,23 @@ nav a.active {
   justify-content: flex-end;
   flex-wrap: nowrap;
   top: 35px;
-  right:15px;
+  right: 15px;
 }
-/* ---------------- Breaking News Hero ---------------- */
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: heroFadeInBlur 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .hero-text {
   display: flex;
   flex-direction: column;
@@ -154,31 +170,28 @@ nav a.active {
   margin: 40px auto;
   padding: 20px 15px;
   border-radius: 10px;
-  animation: heroFadeInSlide 1s ease forwards;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  background: #fff;
-}
-
-.breaking-label {
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  animation: textSlideUp 1.1s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  text-align: center;
 }
 
 .hero-breaking {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: bold;
   color: black;
   margin-bottom: 10px;
-  text-align: center;
 }
 
 .hero-description {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-light);
+  max-width: 700px;
+  margin: auto;
   opacity: 0.9;
-  text-align: center;
 }
 
-/* Breaking News Animations */
+/* Hero Animations */
 @keyframes heroFadeInSlide {
   from {
     opacity: 0;
@@ -215,29 +228,6 @@ nav a.active {
   }
 }
 
-
-
-/* ---------------- Hero Section ---------------- */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 260px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: heroFadeInBlur 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hero-text {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 24px 36px;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  animation: textSlideUp 1.1s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-/* Hero Animations */
 @keyframes heroFadeInBlur {
   from {
     opacity: 0;
@@ -262,7 +252,9 @@ nav a.active {
   }
 }
 
-/* ---------------- News Section ---------------- */
+/* ========================================
+   NEWS SECTION
+   ======================================== */
 .news-section {
   margin-top: 60px;
 }
@@ -300,13 +292,6 @@ nav a.active {
   cursor: pointer;
 }
 
-@keyframes articlePop {
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
 .news-grid img {
   width: 100%;
   display: block;
@@ -325,93 +310,97 @@ nav a.active {
   color: #555;
 }
 
-/* ---------------- Footer ---------------- */
-footer {
-  margin-top: auto;
-  background: #fff;
-  color: #777;
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
+@keyframes articlePop {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-
-
-
-/* ---------------- Weather Widget ---------------- */
-/* ---------------- Weather Card Modern Glassmorphism ---------------- */
-/* ---------------- Weather Widget with Image ---------------- */
-.wheather {
+/* ========================================
+   WEATHER SECTION (with form)
+   ======================================== */
+.weather {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 300px;
-  margin: 0;
-  padding: 20px;
+  max-width: 280px;
+  margin: 40px;
+  padding: 25px;
   border-radius: 20px;
-  background: #ffffff; /* fallback color */
-  background-image: url('../images/backgruond.jpg'); /* relative path from css folder */
+  background-color: paleturquoise;
   background-size: cover;
-  /*filter: blur(0px);*/ /* Optional: slight blur for glass effect */
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
-  position: relative;
   overflow: hidden;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1;
 }
 
-.wheather::after {
+.weather::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.35); /* adjust opacity for darkness */
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  z-index: 0;
 }
 
-.wheather * {
-  position: relative;
-  z-index: 2;
-}
-
-
-/* Hover Effect */
-.wheather:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 50px rgba(0, 123, 255, 0.4);
-}
-
-/* Ensure text stays readable on image */
-.wheather h2, 
-.wheather p {
+.weather * {
   position: relative;
   z-index: 1;
+
   color: #fff;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Input & Button inside card */
+.weather h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.weather p {
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+.weather-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
 .weather-form input[type="text"] {
-  width: 80%;
+  width: 85%;
   padding: 10px 12px;
   border-radius: 10px;
   border: none;
   margin-bottom: 12px;
   outline: none;
   font-size: 15px;
+  transition: 0.3s;
+}
+
+.weather-form input[type="text"]:focus {
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
 .weather-form button {
+  width: 50%;
   padding: 10px 20px;
   border-radius: 12px;
   border: none;
-  background: #007BFF;
+  background: var(--accent-1);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
@@ -419,147 +408,215 @@ footer {
 }
 
 .weather-form button:hover {
-  background: #00c6ff;
+  background: #0056b3;
   transform: scale(1.05);
 }
 
+/* Weather Result Card */
+.weather-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  width: 90%;
+  margin: 30px auto 0 auto;
+  padding: 30px 25px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 123, 255, 0.2);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+}
+
+.weather-result:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(0, 123, 255, 0.35);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.weather-result::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #00c6ff, #0072ff, #00c6ff, #0072ff);
+  animation: rotateGlow 6s linear infinite;
+  opacity: 0.2;
+  border-radius: 30px;
+  z-index: 0;
+}
+
+.weather-result * {
+  position: relative;
+  z-index: 1;
+}
+
+.weather-result h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.weather-result p {
+  font-size: 16px;
+  margin: 6px 0;
+  color: #070d7d;
+}
+
+.weather-result a {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--accent-1);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.weather-result a:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .weather {
+    max-width: 90%;
+    margin-top: 20px;
+  }
+
+  .weather-form input[type="text"] {
+    width: 90%;
+  }
+
+  .weather-form button {
+    width: 60%;
+  }
+
+  .weather-result {
+    width: 95%;
+  }
+}
 
 
+/* ========================================
+   LOGIN & REGISTER PAGES (LIGHT THEME)
+   ======================================== */
 
-/* ---------------- Login Page ---------------- */
-.login-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0077b6, #0096c7);
+/* Common body style */
+.login-body,
+.register-body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg-light);
 }
 
-.login-container {
+
+.login-container,
+.register-container {
   background: #fff;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  width: 350px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 380px;
   text-align: center;
-  animation: fadeIn 1s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.login-header {
-  margin-bottom: 1rem;
-  color: #0077b6;
+.login-container:hover,
+.register-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
-.login-input {
+
+.login-header,
+.register-header {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-1);
+}
+
+
+.login-input,
+.register-input {
   width: 90%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 12px;
+  margin: 12px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   outline: none;
+  font-size: 15px;
   transition: 0.3s;
 }
 
-.login-input:focus {
-  border-color: #0096c7;
-  box-shadow: 0 0 5px #0096c7;
+.login-input:focus,
+.register-input:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+}
+
+
+.login-button,
+.register-button {
+  width: 95%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .login-button {
-  width: 100%;
-  padding: 12px;
-  background: #0077b6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 15px;
-  transition: 0.3s;
+  background: var(--accent-1);
+  color: #fff;
 }
 
 .login-button:hover {
-  background: #023e8a;
-}
-
-/* ---------------- Register Page ---------------- */
-.register-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ff7b00, #ff9500);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.register-container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  width: 350px;
-  text-align: center;
-  animation: slideIn 1s ease-in-out;
-}
-
-.register-header {
-  margin-bottom: 1rem;
-  color: #ff7b00;
-}
-
-.register-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  transition: 0.3s;
-}
-
-.register-input:focus {
-  border-color: #ff9500;
-  box-shadow: 0 0 5px #ff9500;
+  background: #0056b3;
 }
 
 .register-button {
-  width: 100%;
-  padding: 12px;
-  background: #ff7b00;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 15px;
-  transition: 0.3s;
+  background: var(--accent-2);
+  color: #fff;
 }
 
 .register-button:hover {
-  background: #cc5c00;
+  background: #149b7e;
 }
 
-/* ---------------- Shared Switch & Flash Messages ---------------- */
-.switch {
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.switch a {
-  color: inherit;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.switch a:hover {
-  text-decoration: underline;
-}
-
+/* Flash messages */
 .flash {
-  margin: 10px 0;
+  margin: 12px 0;
   padding: 10px;
   border-radius: 6px;
   font-size: 14px;
@@ -577,11 +634,29 @@ footer {
   border: 1px solid #f5c6cb;
 }
 
-/* ---------------- Animations for Forms ---------------- */
+/* Switch link */
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch a {
+  color: var(--accent-1);
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(-30px);
   }
 
   to {
@@ -590,111 +665,27 @@ footer {
   }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.login-container,
+.register-container {
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-/* ---------------- Weather Result Card ---------------- */
-.weather-result {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 500px;
-  width: 90%;
-  margin: 50px auto;
-  padding: 30px 25px;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 30px rgba(0, 123, 255, 0.2);
+/* ========================================
+   FOOTER
+   ======================================== */
+footer {
+  margin-top: auto;
+  background: #fff;
+  color: #777;
   text-align: center;
-  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
-  position: relative; /* important for ::before */
-  overflow: hidden;
-  z-index: 1; /* make sure content is above pseudo-element */
+  padding: 20px;
+  font-size: 14px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
 }
 
-/* Hover effect */
-.weather-result:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 50px rgba(0, 123, 255, 0.35);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Glowing gradient behind the card */
-.weather-result::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, #00c6ff, #0072ff, #00c6ff, #0072ff);
-  animation: rotateGlow 6s linear infinite;
-  opacity: 0.2;
-  border-radius: 30px;
-  z-index: -1; /* IMPORTANT: send it behind content */
-}
-
-@keyframes rotateGlow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Ensure content is layered above */
-.weather-result * {
-  position: relative;
-  z-index: 2;
-}
-
-/* Headings */
-.weather-result h2 {
-  font-size: 30px;
-  font-weight: 700;
-  color: #110101;
-  margin-bottom: 20px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-/* Paragraphs */
-.weather-result p {
-  font-size: 16px;
-  color: #070d7d;
-  margin: 8px 0;
-  opacity: 0.95;
-  transition: color 0.3s ease;
-}
-
-/* Button */
-.weather-result a {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #007BFF;
-  color: #fff;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.weather-result a:hover {
-  background-color: #00c6ff;
-  transform: scale(1.05);
-}
-
-
-/* ---------------- Breaking News Ticker ---------------- */
+/* ========================================
+   NEWS BAR (MARQUEE)
+   ======================================== */
 .news-bar {
   background-color: #ff4e00;
   color: white;
@@ -702,80 +693,260 @@ footer {
   overflow: hidden;
   position: relative;
   white-space: nowrap;
-
-  /* Center the ticker block */
-  width: 80%;           /* or any width you want */
-  margin: 20px auto;    /* centers horizontally */
-  border-radius: 8px;   /* optional: rounded edges */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* optional: subtle shadow */
+  width: 80%;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-
 
 .marquee-content {
   display: inline-block;
-  padding-left: 100%; /* start off-screen */
-  animation: marquee 60s linear infinite; /* adjust duration to slow/fast */
+  padding-left: 100%;
+  animation: marquee 90s linear infinite;
 }
 
 .news-item {
   display: inline-block;
-  margin-right: 50px; /* spacing between headlines */
+  margin-right: 50px;
 }
 
 @keyframes marquee {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-100%);
   }
 }
 
-/* Hero Section Dynamic News */
-.hero-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;      /* centers content horizontally */
-  justify-content: center;  /* centers content vertically if needed */
-  max-width: 800px;         /* limit width */
-  margin: 40px auto;        /* top/bottom spacing + horizontal center */
-  padding: 20px 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px lightblue;
-  background: #fff;
-  animation: heroFadeInSlide 1s ease forwards;
-  text-align: center;       /* centers text inside the block */
-}
-
-
-.hero-breaking {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-.hero-description {
-  font-size: 1rem;
-  color: #333;
-  max-width: 700px;
-  margin:auto;
-}
+/* ========================================
+   TOP CARDS & GENERAL LAYOUT
+   ======================================== */
 .top-cards {
-  display: flex;                /* put the two cards in a row */
-  justify-content: center;      /* center them horizontally */
-  align-items: flex-start;      /* align both cards at the top */
-  gap: 40px;                    /* space between cards */
-  flex-wrap: wrap;              /* wrap on smaller screens */
-  margin-top: 40px; 
-  /*position:relative;      */      /* spacing from top of page */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
 }
-/* Responsive: stack cards on smaller screens */
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
 @media screen and (max-width: 768px) {
   .top-cards {
     flex-direction: column;
     align-items: center;
   }
 
-  .wheather {
+  .weather {
     margin-top: 20px;
+  }
+}
+
+/* ========================================
+   ABOUT PAGE STYLES
+   ======================================== */
+
+/* About Page Hero Section */
+.about-hero {
+  background: linear-gradient(to right, #f0f8ff, #ffffff);
+  padding: 60px 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+  transition: transform 0.3s ease;
+}
+
+.about-hero:hover {
+  transform: translateY(-5px);
+}
+
+.about-hero h2 {
+  font-size: 2.5rem;
+  color: #007BFF;
+  margin-bottom: 15px;
+}
+
+.about-hero p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* About Description */
+.about-description {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about-description p {
+  font-size: 1rem;
+  max-width: 800px;
+  margin: auto;
+  color: #444;
+}
+
+/* Team Section */
+.team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.team-member {
+  flex: 1 1 250px;
+  max-width: 250px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.team-member img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+.team-member h3 {
+  font-size: 1.2rem;
+  color: #007BFF;
+  margin-bottom: 5px;
+}
+
+.team-member p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ========================================
+   CONTACT PAGE STYLES
+   ======================================== */
+
+/* Contact Hero Section */
+.contact-hero {
+  background: linear-gradient(to right, #f9f9ff, #ffffff);
+  padding: 50px 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+  transition: transform 0.3s ease;
+}
+
+.contact-hero:hover {
+  transform: translateY(-5px);
+}
+
+.contact-hero h2 {
+  font-size: 2.2rem;
+  color: #007BFF;
+  margin-bottom: 12px;
+}
+
+.contact-hero p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Contact Form */
+.contact-form {
+  max-width: 500px;
+  margin: auto;
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 123, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 123, 255, 0.2);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px #007BFF;
+}
+
+.contact-form button {
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #007BFF;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.contact-form button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.contact-socials {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.contact-socials h3 {
+  font-size: 1.5rem;
+  color: #007BFF;
+  margin-bottom: 20px;
+}
+
+.contact-socials .social-icons a {
+  display: inline-block;
+  margin: 0 12px;
+  font-size: 1.5rem;
+  color: #007BFF;
+  transition: all 0.3s ease;
+}
+
+.contact-socials .social-icons a:hover {
+  color: #0056b3;
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .team {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-form {
+    width: 90%;
   }
 }

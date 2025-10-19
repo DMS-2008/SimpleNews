@@ -2,29 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Todays Voice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Animate articles
-            document.querySelectorAll('.news-grid article').forEach((a, i) => {
-                a.style.animationPlayState = 'running';
-            });
-            // Highlight active nav link
-            document.querySelectorAll('nav a').forEach(link => {
-                if (link.getAttribute('href') === 'about.html') {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="about">
+<body>
+    <!-- HEADER -->
     <header>
         <div class="container">
             <h1>Todays Voice</h1>
@@ -33,29 +18,45 @@
                 <a href="politics.html">Politics</a>
                 <a href="technology.html">Technology</a>
                 <a href="sports.html">Sports</a>
-                <a href="about.html">About</a>
+                <a href="about.html" class="active">About</a>
                 <a href="contact.html">Contact</a>
-
             </nav>
         </div>
     </header>
-    <section class="hero">
-        <img src="images/hero.jpg" alt="About" />
-        <div class="hero-text">
-            <h2>About Todays Voice</h2>
-            <p>Learn more about our mission, vision, and team.</p>
-        </div>
+
+    <!-- HERO SECTION -->
+    <section class="about-hero">
+        <h2>About Todays Voice</h2>
+        <p>Delivering accurate and timely news to keep our readers informed with journalistic integrity.</p>
     </section>
-    <section class="news-section container">
-        <h2>Who We Are</h2>
-        <div class="news-grid">
-            <article>
-                <img src="images/hero.jpg" alt="About" />
-                <h3>Our Story</h3>
-                <p>Todays Voice is dedicated to delivering the latest news...</p>
-            </article>
-        </div>
+
+    <!-- DESCRIPTION -->
+    <section class="about-description">
+        <p>Founded in 2025, Todays Voice aims to be the most trusted source of news. Our dedicated team of reporters and editors
+            work tirelessly to cover politics, technology, sports, and global events with professionalism and care.</p>
     </section>
+
+    <!-- TEAM SECTION -->
+    <section class="team">
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='images/member1.jpg') }}" alt="Team Member">
+            <h3>Doflamingo</h3>
+            <p>Editor-in-Chief</p>
+        </div>
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='images/member2.jpg') }}" alt="Team Member">
+            <h3>Kaido</h3>
+            <p>Senior Reporter</p>
+        </div>
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='images/member3.jpg') }}" alt="Team Member">
+            <h3>Sir Crocodile</h3>
+            <p>Content Manager</p>
+        </div>
+        
+    </section>
+
+    <!-- FOOTER -->
     <footer>
         <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
     </footer>
