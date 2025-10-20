@@ -1,28 +1,58 @@
+# ==============================================================
+# app.py — Flask Web App for "Today's Voice" News Portal
+# ==============================================================
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import requests
 import time
+from flask_mail import Mail, Message  # ✅ Added for email functionality
+
+# ==============================================================
+# 1️⃣ BASIC APP CONFIGURATION
+# ==============================================================
 
 app = Flask(__name__)
-
-app.secret_key = "your_secret_key"  # Change this for production
+app.secret_key = "your_secret_key"  # Change this in production!
 
 # ----------------- Database Path ----------------- #
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
-# ----------------- Weather API Config ----------------- #
+# ==============================================================
+# 2️⃣ API KEYS AND ENDPOINT CONFIGURATION
+# ==============================================================
+
+# Weather API Configuration
 WEATHER_API_KEY = "f0addff8ded1c7d4f5cc71579de53b4b"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
 
-# ----------------- News API Config ----------------- #
-# Mani key pub_2699a35e03554ae79ac614e85f8400d8
-# mohan key pub_915ed70053cb4adfb5ceb7ed12ffa0ce
-NEWS_API_KEY = "pub_915ed70053cb4adfb5ceb7ed12ffa0ce" 
+# =============================================
+# News API Configuration
+#key1--> pub_2699a35e03554ae79ac614e85f8400d8
+#key2--> pub_915ed70053cb4adfb5ceb7ed12ffa0ce
+# ==============================================
+NEWS_API_KEY = "pub_915ed70053cb4adfb5ceb7ed12ffa0ce"
 NEWS_URL = f"https://newsdata.io/api/1/latest?apikey={NEWS_API_KEY}&q=latest%20news"
 
-# ----------------- Database Setup ----------------- #
+# ==============================================================
+# 3️⃣ EMAIL (SMTP) CONFIGURATION
+# ==============================================================
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'mangapathi78@gmail.com'  
+app.config['MAIL_PASSWORD'] = 'jrsg nhtr xqli oxgw'     
+app.config['MAIL_DEFAULT_SENDER'] = app.config['MAIL_USERNAME']
+
+mail = Mail(app)
+
+# ==============================================================
+# 4️⃣ DATABASE INITIALIZATION
+# ==============================================================
+
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -38,14 +68,16 @@ def init_db():
 
 init_db()
 
-# ----------------- Cache Setup ----------------- #
-news_cache = {
-    "data": [],
-    "timestamp": 0
-}
-CACHE_DURATION = 15 * 60  # 15 minutes in seconds
+# ==============================================================
+# 5️⃣ CACHING FOR NEWS API
+# ==============================================================
 
-# ----------------- Routes ----------------- #
+news_cache = {"data": [], "timestamp": 0}
+CACHE_DURATION = 15 * 60  # 15 minutes
+
+# ==============================================================
+# 6️⃣ MAIN ROUTES (HOME + WEATHER + NEWS)
+# ==============================================================
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index.html", methods=["GET", "POST"])
@@ -67,19 +99,15 @@ def home():
             return render_template("result.html", weather=weather)
         else:
             return render_template("result.html", weather=None, error="City not found!")
-
     return render_template("index.html")
 
-
-# ✅ Endpoint to fetch latest breaking news with caching
+# ----------------- Fetch Latest News ----------------- #
 @app.route("/get_news")
 def get_news():
     global news_cache
-
-    category = request.args.get("category", "latest")  # default to latest news
+    category = request.args.get("category", "latest")
     current_time = time.time()
-    
-    # Check cache
+
     if news_cache.get(category) and (current_time - news_cache[category]["timestamp"] < CACHE_DURATION):
         return jsonify({"news": news_cache[category]["data"]})
 
@@ -94,25 +122,49 @@ def get_news():
             "image": article.get("image_url", "")
         } for article in articles]
 
-        # Cache per category
-        news_cache[category] = {
-            "data": news_list,
-            "timestamp": current_time
-        }
-
+        news_cache[category] = {"data": news_list, "timestamp": current_time}
         return jsonify({"news": news_list})
     except Exception as e:
         return jsonify({"news": [{"title": "Error fetching news", "description": str(e)}]})
 
+# ==============================================================
+# 7️⃣ STATIC PAGE ROUTES
+# ==============================================================
 
-
-# ----------------- Static Pages ----------------- #
 @app.route("/about.html")
 def about():
     return render_template("about.html")
 
-@app.route("/contact.html")
+@app.route("/contact.html", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        # Retrieve user form data
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        # Compose the email
+        msg = Message(
+            subject=f"Message from {name} via Todays Voice",
+            sender=app.config['MAIL_USERNAME'],
+            recipients=['your_email@gmail.com']  # ✅ Replace with your recipient email
+        )
+        msg.body = f"""
+        Name: {name}
+        Email: {email}
+
+        Message:
+        {message}
+        """
+
+        try:
+            mail.send(msg)
+            flash("Message sent successfully!", "success")
+        except Exception as e:
+            flash(f"Error sending message: {e}", "danger")
+
+        return redirect(url_for("contact"))
+
     return render_template("contact.html")
 
 @app.route("/sports.html")
@@ -127,8 +179,10 @@ def technology():
 def politics():
     return render_template("politics.html")
 
+# ==============================================================
+# 8️⃣ AUTHENTICATION (LOGIN / REGISTER / LOGOUT)
+# ==============================================================
 
-# ----------------- Authentication ----------------- #
 @app.route("/register.html", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -139,10 +193,7 @@ def register():
         try:
             conn = sqlite3.connect(DB_PATH)
             cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO users (email, password) VALUES (?, ?)",
-                (email, hashed_password)
-            )
+            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", (email, hashed_password))
             conn.commit()
             conn.close()
             flash("Registration successful! Please login.", "success")
@@ -150,7 +201,6 @@ def register():
         except sqlite3.IntegrityError:
             flash("Email already registered!", "danger")
             return redirect(url_for("register"))
-
     return render_template("register.html")
 
 @app.route("/login.html", methods=["GET", "POST"])
@@ -171,7 +221,6 @@ def login():
             return redirect(url_for("home"))
         else:
             flash("Invalid email or password!", "danger")
-
     return render_template("login.html")
 
 @app.route("/logout")
@@ -180,6 +229,9 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("home"))
 
-# ----------------- Run App ----------------- #
+# ==============================================================
+# 9️⃣ MAIN EXECUTION
+# ==============================================================
+
 if __name__ == "__main__":
     app.run(debug=True)

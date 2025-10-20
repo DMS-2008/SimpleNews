@@ -2,60 +2,92 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Todays Voice</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Todays Voice</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-            <h1>Todays Voice</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="politics.html">Politics</a>
-                <a href="technology.html">Technology</a>
-                <a href="sports.html">Sports</a>
-                <a href="about.html">About</a>
-                <a href="contact.html" class="active">Contact</a>
-            </nav>
-        </div>
-    </header>
+<body class="contact-page">
 
-    <!-- HERO SECTION -->
-    <section class="contact-hero">
-        <h2>Contact Us</h2>
-        <p>We'd love to hear from you! Reach out with your questions or feedback.</p>
-    </section>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1>Todays Voice</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="politics.html">Politics</a>
+        <a href="technology.html">Technology</a>
+        <a href="sports.html">Sports</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- CONTACT FORM -->
-    <section class="contact-form-section">
-        <form class="contact-form" method="post" action="/send-message">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+  <!-- Contact Hero Section -->
+  <section class="contact-hero">
+    <h2>Get in Touch</h2>
+    <p>We’d love to hear from you. Share your thoughts, ideas, or feedback with us.</p>
+  </section>
 
-    <!-- SOCIAL MEDIA LINKS -->
-    <section class="contact-socials">
-        <h3>Follow Us</h3>
-        <div class="social-icons">
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-    </section>
+  <!-- Contact Form -->
+<form method="POST" action="{{ url_for('contact') }}" class="contact-form">
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
 
-    <!-- FOOTER -->
-    <footer >
-        <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
-    </footer>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+  <!-- Social Links -->
+  <section class="contact-socials">
+    <h3>Follow Us</h3>
+    <div class="social-icons">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p>&copy; 2025 Todays Voice. Designed by Batch5.</p>
+  </footer>
+
+  <!-- JS for mailto intent -->
+  <script>
+    document.getElementById("emailForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const subject = encodeURIComponent("Contact from Todays Voice - " + name);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+
+      // opens user’s default email client like Gmail or Outlook
+      window.location.href = `mailto:your_email@gmail.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+
 </body>
 
 </html>

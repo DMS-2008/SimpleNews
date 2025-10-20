@@ -939,6 +939,29 @@ footer {
   transform: scale(1.2);
 }
 
+.flash-messages {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.flash {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.flash.success {
+  background-color: #28a745;
+}
+
+.flash.danger {
+  background-color: #dc3545;
+}
+
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .team {
