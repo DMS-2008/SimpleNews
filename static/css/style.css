@@ -191,7 +191,7 @@ nav a.active {
   opacity: 0.9;
 }
 
-/* Hero Animations */
+
 @keyframes heroFadeInSlide {
   from {
     opacity: 0;
@@ -412,7 +412,7 @@ nav a.active {
   transform: scale(1.05);
 }
 
-/* Weather Result Card */
+
 .weather-result {
   display: flex;
   flex-direction: column;
@@ -488,7 +488,7 @@ nav a.active {
   transform: scale(1.05);
 }
 
-/* Animations */
+
 @keyframes rotateGlow {
   0% {
     transform: rotate(0deg);
@@ -499,7 +499,7 @@ nav a.active {
   }
 }
 
-/* Responsive */
+
 @media screen and (max-width: 768px) {
   .weather {
     max-width: 90%;
@@ -524,7 +524,7 @@ nav a.active {
    LOGIN & REGISTER PAGES (LIGHT THEME)
    ======================================== */
 
-/* Common body style */
+
 .login-body,
 .register-body {
   display: flex;
@@ -614,7 +614,7 @@ nav a.active {
   background: #149b7e;
 }
 
-/* Flash messages */
+
 .flash {
   margin: 12px 0;
   padding: 10px;
@@ -634,7 +634,7 @@ nav a.active {
   border: 1px solid #f5c6cb;
 }
 
-/* Switch link */
+
 .switch {
   margin-top: 15px;
   font-size: 14px;
@@ -652,7 +652,7 @@ nav a.active {
   color: #0056b3;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -674,6 +674,7 @@ nav a.active {
    FOOTER
    ======================================== */
 footer {
+  position: relative;
   margin-top: auto;
   background: #fff;
   color: #777;
@@ -750,7 +751,7 @@ footer {
    ABOUT PAGE STYLES
    ======================================== */
 
-/* About Page Hero Section */
+
 .about-hero {
   background: linear-gradient(to right, #f0f8ff, #ffffff);
   padding: 60px 20px;
@@ -776,7 +777,7 @@ footer {
   color: #555;
 }
 
-/* About Description */
+
 .about-description {
   text-align: center;
   margin-bottom: 50px;
@@ -789,7 +790,7 @@ footer {
   color: #444;
 }
 
-/* Team Section */
+
 .team {
   display: flex;
   flex-wrap: wrap;
@@ -836,7 +837,7 @@ footer {
    CONTACT PAGE STYLES
    ======================================== */
 
-/* Contact Hero Section */
+
 .contact-hero {
   background: linear-gradient(to right, #f9f9ff, #ffffff);
   padding: 50px 20px;
@@ -862,7 +863,7 @@ footer {
   color: #555;
 }
 
-/* Contact Form */
+
 .contact-form {
   max-width: 500px;
   margin: auto;
@@ -962,7 +963,7 @@ footer {
 }
 
 
-/* Responsive Design */
+
 @media screen and (max-width: 768px) {
   .team {
     flex-direction: column;
@@ -972,4 +973,26 @@ footer {
   .contact-form {
     width: 90%;
   }
+}
+
+/* ========================================
+   NAVIGATION ARROW
+   ======================================== */
+
+.toparrow {
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+}
+
+.toparrow img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.toparrow img:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
