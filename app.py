@@ -1,5 +1,5 @@
 # ==============================================================
-# app.py — Flask Web App for "Today's Voice" News Portal
+# app.py — Flask Web App for "Todays Voice" News Portal
 # ==============================================================
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
