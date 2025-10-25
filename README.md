@@ -30,7 +30,7 @@ Built using **Flask (Python)** for the backend and **HTML, CSS, and JavaScript**
 - SQLite3 (for User Authentication)
 
 **APIs Used:**  
-- OpenWeatherMap API  
+- OpenWeatherMap.org API  
 - NewsData.io API  
 
 ---
@@ -43,3 +43,5 @@ Follow these steps to run the project locally:
 ```bash
 git clone https://github.com/dms-2008/simplenews.git
 cd simplenews
+pip install -r requirements.txt
+flask run
