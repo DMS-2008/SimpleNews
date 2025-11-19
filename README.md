@@ -45,3 +45,8 @@ git clone https://github.com/dms-2008/simplenews.git
 cd simplenews
 pip install -r requirements.txt
 flask run
+
+
+Media Link
+
+https://drive.google.com/drive/folders/1at5Bv4BiGLpwBO2nyTQmit9yFfRbp9vR?usp=sharing
