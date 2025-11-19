@@ -15,7 +15,7 @@ from flask_mail import Mail, Message  # ✅ Added for email functionality
 # ==============================================================
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Change this in production!
+app.secret_key = os.urandom(24) 
 
 # ----------------- Database Path ----------------- #
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
